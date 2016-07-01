@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AuthService from 'src/services/auth-service';
+
 export default class Login extends React.Component {
 
   constructor() {
@@ -16,15 +18,16 @@ export default class Login extends React.Component {
                .catch(err => {
                   console.log("Error logging in", err);
                });
+    return false;
   }
 
   render() {
     return (
       <div className="login">
         <form>
-          <input class="login--input" text="text" onChange={this._onUsernameChange.bind(this)} placeholder="username" />
-          <input class="login--input" text="passowrd" onChange={this._onPasswordChange.bind(this)} placeholder="password" />
-          <button class="login--button" type="submit" onClick={this.login}>Login</button>
+          <input class="login--input" type="text" onChange={this._onUsernameChange.bind(this)} placeholder="username" />
+          <input class="login--input" type="password" onChange={this._onPasswordChange.bind(this)} placeholder="password" />
+          <button class="login--button" type="submit" onClick={this.login.bind(this)}>Login</button>
         </form>
       </div>
     );
