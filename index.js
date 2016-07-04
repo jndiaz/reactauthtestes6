@@ -2,14 +2,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
+var jwt = require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-var config = {
-apiKey: "AIzaSyB-rUnUzB4yakmIujeByqc_yd3vmqHsoXE",
-authDomain: "musicman-1339.firebaseapp.com",
-databaseURL: "https://musicman-1339.firebaseio.com",
-storageBucket: "musicman-1339.appspot.com",
-};
 
 app.use('/', express.static(__dirname + '/build'));
 app.get('/', function (req ,res) {
@@ -17,7 +12,8 @@ app.get('/', function (req ,res) {
 });
 app.post('/login', function(req, res){
   if(req.body.username == 'admin' && req.body.password == 'admin'){
-    res.json({id_token: '123'});
+    var token = jwt.sign({username: req.body.username, password: req.body.password}, 'secretString');
+    res.json({id_token: token});
   } else {
     res.status(400);
     res.json({invalid: true});

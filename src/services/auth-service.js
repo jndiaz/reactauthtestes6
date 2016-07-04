@@ -1,5 +1,6 @@
 import when from 'when';
 import reqwest from 'reqwest';
+import LoginActions from 'src/actions/login-action';
 
 class AuthService {
   login(username, password) {
@@ -12,7 +13,7 @@ class AuthService {
         username, password
       }
     })).then(response => {
-      console.log(response);
+      LoginActions.loginUser(response.id_token);
       return true;
     })
   }
